@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/MOdel/recipe.dart';
+import 'package:recipes/recipe-detail.dart';
+
 
 void main() {
   runApp(const RecipeApp());
@@ -59,25 +61,50 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: SafeArea(child: Container(
-        child: ListView.builder(itemBuilder: (BuildContext context,int index) 
-        {
-          return buildRecipeCard(Recipe.samples[index]);
-        },
-        itemCount: Recipe.samples.length,
-        ), 
-      )),
-      );
+      body: SafeArea(
+        child: Container(
+          child: ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  print('You tapped on ${Recipe.samples[index].imageLabel}');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return RecipeDetail(recipe: Recipe.samples[index]);
+                      },
+                    ),
+                  );
+                },
+                child: buildRecipeCard(Recipe.samples[index]),
+              );
+            },
+            itemCount: Recipe.samples.length,
+          ),
+        ),
+      ),
+    );
   }
 }
 
 Widget buildRecipeCard(Recipe recipe) {
-  return Card(
+  var card = Card(
+    elevation: 2.0,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     child: Column(
       children: <Widget>[
+        Text(
+          recipe.imageLabel,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 14),
         Image(image: AssetImage(recipe.imageUrl)),
-        Text(recipe.imageLabel),
+        const SizedBox(height: 14),
+        Text('Im Hungry'),
       ],
     ),
   );
+  return Padding(padding: const EdgeInsets.all(8.0), child: card);
 }
+
