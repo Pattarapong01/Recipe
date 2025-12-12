@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes/MOdel/recipe.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipeDetail extends StatelessWidget{
   Recipe recipe;
@@ -12,16 +13,34 @@ class RecipeDetail extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Detail'),
+        titleTextStyle: GoogleFonts.lato(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+                ),
       ),
       body: Center(
         child : Column(
           children: [
-            Text(recipe.imageLabel),
-            Image.asset(recipe.imageUrl),
+             Text(
+              recipe.imageDetail,
+              style: GoogleFonts.lato(
+              fontWeight: FontWeight.bold
+              )
+             ),
+          Image.asset(recipe.imageUrl),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                recipe.imageDetail,
+                style: GoogleFonts.lato(
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
           ],
         ),
       ),
-
     );
   }
 }
